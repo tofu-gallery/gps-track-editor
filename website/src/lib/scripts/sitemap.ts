@@ -2,8 +2,12 @@ import fs from 'fs';
 import { glob } from 'glob';
 import { languages } from '$lib/languages';
 
+// Tofu: a sitemap needs absolute addresses, and a copy's address is not gpx.studio. It is written
+// only when SITE_URL names this copy's address (for example https://tracks.example.com).
+const siteURL = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
+
 function getURLForLanguage(lang: string, path: string): string {
-    return `https://gpx.studio${lang === 'en' ? '' : `/${lang}`}${path}`;
+    return `${siteURL}${lang === 'en' ? '' : `/${lang}`}${path}`;
 }
 
 function generateSitemap() {
@@ -46,4 +50,8 @@ function generateSitemap() {
     return sitemap;
 }
 
-fs.writeFileSync('build/sitemap.xml', generateSitemap());
+if (siteURL) {
+    fs.writeFileSync('build/sitemap.xml', generateSitemap());
+} else {
+    console.log('SITE_URL is not set: no sitemap.xml written.');
+}

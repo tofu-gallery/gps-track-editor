@@ -24,7 +24,8 @@ liveQuery(() => db.overpassdata.toArray()).subscribe((pois) => {
 });
 
 export class OverpassLayer {
-    overpassUrl = 'https://overpass.gpx.studio/api/interpreter';
+    // Tofu: the public Overpass API instance instead of the original site's own server.
+    overpassUrl = 'https://overpass-api.de/api/interpreter';
     minZoom = 12;
     queryZoom = 12;
     expirationTime = 7 * 24 * 3600 * 1000;

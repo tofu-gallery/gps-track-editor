@@ -121,7 +121,8 @@ export function getElevation(
     };
 
     let promises = uniqueTiles.map((tile) =>
-        fetch(`https://tiles.gpx.studio/mapterhorn/${ELEVATION_ZOOM}/${tile[0]}/${tile[1]}.webp`, {
+        // Tofu: elevation tiles from Mapterhorn's own public endpoint, not the original site's mirror.
+        fetch(`https://tiles.mapterhorn.com/${ELEVATION_ZOOM}/${tile[0]}/${tile[1]}.webp`, {
             cache: 'force-cache',
         })
             .then((response) => response.blob())

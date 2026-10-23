@@ -22,39 +22,27 @@ export async function handle({ event, resolve }) {
 
     const htmlTag = `<html lang="${language}" translate="no">`;
 
+    // Tofu: this copy is not gpx.studio. The product name is neutral, and the tags that pointed at
+    // the original site's address, image, social accounts and language alternates are removed
+    // (a copy does not know its own address at build time).
     let headTag = `<head>
-    <title>gpx.studio — ${title}</title>
+    <title>GPS track editor — ${title}</title>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "gpx.studio",
-        "url": "https://gpx.studio"
+        "name": "GPS track editor"
     }
     </script>
     <meta name="description" content="${description}" />
-    <meta property="og:title" content="gpx.studio — ${title}" />
+    <meta property="og:title" content="GPS track editor — ${title}" />
     <meta property="og:description" content="${description}" />
-    <meta name="twitter:title" content="gpx.studio — ${title}" />
+    <meta name="twitter:title" content="GPS track editor — ${title}" />
     <meta name="twitter:description" content="${description}" />
-    <meta property="og:image" content="https://gpx.studio${base}/og_logo.png" />
-    <meta property="og:url" content="https://gpx.studio/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="gpx.studio" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://gpx.studio${base}/og_logo.png" />
-    <meta name="twitter:url" content="https://gpx.studio/" />
-    <meta name="twitter:site" content="@gpxstudio" />
-    <meta name="twitter:creator" content="@gpxstudio" />
-    <link rel="alternate" hreflang="x-default" href="https://gpx.studio${getURLForLanguage('en', path)}" />
+    <meta property="og:site_name" content="GPS track editor" />
+    <meta name="twitter:card" content="summary" />
     <link rel="manifest" href="/${language}.manifest.webmanifest" />`;
-
-    if (page !== '404') {
-        for (let lang of Object.keys(languages)) {
-            headTag += `   <link rel="alternate" hreflang="${lang}" href="https://gpx.studio${getURLForLanguage(lang, path)}" />
-`;
-        }
-    }
 
     const response = await resolve(event, {
         transformPageChunk: ({ html }) =>

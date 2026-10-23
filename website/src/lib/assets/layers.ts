@@ -30,11 +30,13 @@ import bikerouterGravel from './custom/bikerouter-gravel.json';
 
 export const maptilerKeyPlaceHolder = 'MAPTILER_KEY';
 
+// Tofu: the first four styles used to load from styles.gpx.studio, which serves the original
+// site's own tiles, fonts and sprites (and needs a MapTiler key for satellite). This copy uses
+// OpenFreeMap's keyless Liberty and Bright styles; `libertySatellite` and `osmTopo` are pointed at
+// keyless layers below and hidden from the layer menus, so links that name them still open a map.
 export const basemaps: { [key: string]: string | StyleSpecification } = {
-    libertyTopo: 'https://styles.gpx.studio/liberty-topo.json',
-    libertySatellite: 'https://styles.gpx.studio/liberty-satellite.json',
-    osm: 'https://styles.gpx.studio/osm.json',
-    osmTopo: 'https://styles.gpx.studio/osm-topo.json',
+    libertyTopo: 'https://tiles.openfreemap.org/styles/liberty',
+    osm: 'https://tiles.openfreemap.org/styles/bright',
     esriSatellite: {
         version: 8,
         sources: {
@@ -787,6 +789,10 @@ export const overlays: { [key: string]: string | StyleSpecification } = {
     },
 };
 
+// Tofu: keyless stand-ins for two styles that only the original site's servers provided.
+basemaps.libertySatellite = basemaps.esriSatellite;
+basemaps.osmTopo = basemaps.openTopoMap;
+
 export const defaultOpacities: { [key: string]: number } = {
     ignFrCadastre: 0.5,
     ignSlope: 0.4,
@@ -799,10 +805,9 @@ export type LayerTreeType = { [key: string]: LayerTreeType | boolean };
 export const basemapTree: LayerTreeType = {
     basemaps: {
         world: {
+            // Tofu: `libertySatellite` and `osmTopo` removed from the menu (see `basemaps`).
             libertyTopo: true,
-            libertySatellite: true,
             osm: true,
-            osmTopo: true,
             esriSatellite: true,
             openStreetMap: true,
             openTopoMap: true,
@@ -1025,11 +1030,10 @@ export const defaultOverpassQueries: LayerTreeType = {
 export const defaultBasemapTree: LayerTreeType = {
     basemaps: {
         world: {
+            // Tofu: Esri imagery is shown by default in place of the removed Liberty Satellite.
             libertyTopo: true,
-            libertySatellite: true,
             osm: true,
-            osmTopo: true,
-            esriSatellite: false,
+            esriSatellite: true,
             openStreetMap: true,
             openTopoMap: true,
             openHikingMap: true,
@@ -1489,7 +1493,8 @@ export const overpassQueryData: Record<string, OverpassQueryData> = {
 export const terrainSources: { [key: string]: RasterDEMSourceSpecification } = {
     mapterhorn: {
         type: 'raster-dem',
-        url: 'https://tiles.gpx.studio/mapterhorn.json',
+        // Tofu: Mapterhorn's own public endpoint instead of the original site's mirror.
+        url: 'https://tiles.mapterhorn.com/tilejson.json',
         encoding: 'terrarium',
     },
 };

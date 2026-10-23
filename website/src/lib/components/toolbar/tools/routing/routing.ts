@@ -11,13 +11,16 @@ export type RoutingProfile = {
     profile: string;
 };
 
+// Tofu: the GraphHopper server (graphhopper.gpx.studio) belongs to the original site, so every
+// profile is routed by the public BRouter server (brouter.de) with its nearest built-in profile.
+// The "private roads" switch only applied to GraphHopper and has no effect here.
 export const routingProfiles: { [key: string]: RoutingProfile } = {
-    bike: { engine: 'graphhopper', profile: 'bike' },
-    racing_bike: { engine: 'graphhopper', profile: 'racingbike' },
-    gravel_bike: { engine: 'graphhopper', profile: 'gravelbike' },
-    mountain_bike: { engine: 'graphhopper', profile: 'mtb' },
-    foot: { engine: 'graphhopper', profile: 'foot' },
-    motorcycle: { engine: 'graphhopper', profile: 'motorbike' },
+    bike: { engine: 'brouter', profile: 'trekking' },
+    racing_bike: { engine: 'brouter', profile: 'fastbike' },
+    gravel_bike: { engine: 'brouter', profile: 'gravel' },
+    mountain_bike: { engine: 'brouter', profile: 'mtb' },
+    foot: { engine: 'brouter', profile: 'hiking-mountain' },
+    motorcycle: { engine: 'brouter', profile: 'car-vario' },
     water: { engine: 'brouter', profile: 'river' },
     railway: { engine: 'brouter', profile: 'rail' },
 };

@@ -2,6 +2,10 @@ import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 
+// Tofu: every default map style in this copy is keyless, so a build without a MapTiler key
+// reads it as an empty string instead of failing the `$env/static/public` import.
+process.env.PUBLIC_MAPTILER_KEY ??= '';
+
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
     extensions: ['.mdx'],
@@ -19,7 +23,8 @@ const config = {
             strict: true,
         }),
         paths: {
-            base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
+            // Tofu: the copy is served at the root of its own address, so the base path is empty.
+            base: '',
             relative: false,
         },
         prerender: {

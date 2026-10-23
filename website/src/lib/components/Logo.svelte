@@ -14,9 +14,10 @@
 </script>
 
 {#if company === 'gpx.studio'}
+    <!-- Tofu: `logo*.svg` and `icon*.svg` are a neutral mark for this copy, not the original logo. -->
     <img
         src="{base}/{iconOnly ? 'icon' : 'logo'}{mode.current === 'dark' ? '-dark' : ''}.svg"
-        alt="Logo of gpx.studio."
+        alt="GPS track editor"
         {...others}
     />
 {:else if company === 'github'}

@@ -1,0 +1,21 @@
+{
+    "name": "gps-track-editor",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Tofu: builds this repository's gpx library and its SvelteKit website (website/) from the repository root, in the same order as the original project's deploy workflow. Based on GPX Studio.",
+    "license": "MIT",
+    "scripts": {
+        "build": "npm ci --include=dev --prefix gpx && npm ci --include=dev --prefix website && npm run build --prefix website"
+    },
+    "engines": {
+        "node": ">=22"
+    },
+    "peerDependencies": {
+        "@sveltejs/kit": "^2.21.2"
+    },
+    "peerDependenciesMeta": {
+        "@sveltejs/kit": {
+            "optional": true
+        }
+    }
+}

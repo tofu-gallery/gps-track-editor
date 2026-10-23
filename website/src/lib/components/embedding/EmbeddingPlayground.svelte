@@ -26,6 +26,8 @@
     import Embedding from './Embedding.svelte';
     import { onDestroy } from 'svelte';
     import { base } from '$app/paths';
+    // Tofu: the embed code names this copy's own address, not gpx.studio.
+    import { page } from '$app/state';
     import { map } from '$lib/components/map/map';
     import { mode } from 'mode-watcher';
 
@@ -321,7 +323,7 @@
             <pre
                 class="bg-primary text-primary-foreground p-3 rounded-md whitespace-normal break-all">
                 <code class="language-html">
-                    {`<iframe src="https://gpx.studio${base}/embed?options=${encodeURIComponent(JSON.stringify(getCleanedEmbeddingOptions(iframeOptions)))}${hash}" width="100%" height="600px" frameborder="0" style="outline: none;"/>`}
+                    {`<iframe src="${page.url.origin}${base}/embed?options=${encodeURIComponent(JSON.stringify(getCleanedEmbeddingOptions(iframeOptions)))}${hash}" width="100%" height="600px" frameborder="0" style="outline: none;"/>`}
                 </code>
             </pre>
         </fieldset>

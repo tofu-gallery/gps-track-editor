@@ -506,22 +506,7 @@
                         </Menubar.SubContent>
                     </Menubar.Sub>
                     <Menubar.Separator />
-                    <Menubar.Sub>
-                        <Menubar.SubTrigger>
-                            <PersonStanding size="16" />
-                            {i18n._('menu.street_view_source')}
-                        </Menubar.SubTrigger>
-                        <Menubar.SubContent>
-                            <Menubar.RadioGroup bind:value={$streetViewSource}>
-                                <Menubar.RadioItem value="mapillary"
-                                    >{i18n._('menu.mapillary')}</Menubar.RadioItem
-                                >
-                                <Menubar.RadioItem value="google"
-                                    >{i18n._('menu.google')}</Menubar.RadioItem
-                                >
-                            </Menubar.RadioGroup>
-                        </Menubar.SubContent>
-                    </Menubar.Sub>
+                    <!-- Tofu: the street view source menu is removed along with street view. -->
                     <Menubar.Item onclick={() => (layerSettingsOpen = true)}>
                         <Layers size="16" />
                         {i18n._('menu.layers')}

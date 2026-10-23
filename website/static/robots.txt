@@ -1,6 +1,6 @@
+# Tofu: the Sitemap line that named gpx.studio is removed; this copy writes a sitemap only when SITE_URL is set.
 User-agent: *
 Disallow: /*?*
 Disallow: /embed
 Disallow: /*/embed
 Disallow: /404
-Sitemap: https://gpx.studio/sitemap.xml

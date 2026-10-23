@@ -56,7 +56,8 @@
 
     $effect(() => {
         if (i18n.isLoading) return;
-        let title = `gpx.studio — ${i18n._(`metadata.${page.route.id?.replace('/[[language]]', '').split('/')[1] ?? 'home'}_title`)}`;
+        // Tofu: neutral product name in the page title.
+        let title = `GPS track editor — ${i18n._(`metadata.${page.route.id?.replace('/[[language]]', '').split('/')[1] ?? 'home'}_title`)}`;
         if (page.params.guide) {
             document.title = `${title} | ${data.guideTitles[page.params.guide]}`;
         } else {

@@ -12,6 +12,15 @@
     <div class="w-full max-w-5xl flex flex-row flex-wrap justify-between gap-x-10 gap-y-6">
         <div class="grow flex flex-col items-start">
             <Logo class="h-8" width="153" />
+            <!-- Tofu: credit line for the project this copy is based on; the licence notice stays. -->
+            <Button
+                variant="link"
+                class="h-6 px-0 has-[>svg]:px-0 text-muted-foreground"
+                href="https://github.com/gpxstudio/gpx.studio"
+                target="_blank"
+            >
+                Based on GPX Studio
+            </Button>
             <Button
                 variant="link"
                 class="h-6 px-0 has-[>svg]:px-0 text-muted-foreground"
@@ -54,37 +63,10 @@
                     {i18n._('menu.help')}
                 </Button>
             </div>
+            <!-- Tofu: the Contact column (the original project's Reddit, Facebook and email) is
+                 removed, so visitors of this copy are not sent to the original author for support.
+                 Its `contact` id moves here: the help pages link to it, and the build checks them. -->
             <div class="flex flex-col items-start gap-1" id="contact">
-                <span class="font-semibold">{i18n._('homepage.contact')}</span>
-                <Button
-                    variant="link"
-                    class="h-6 px-0 has-[>svg]:px-0 text-muted-foreground"
-                    href="https://www.reddit.com/r/gpxstudio/"
-                    target="_blank"
-                >
-                    <Logo company="reddit" class="h-4 fill-muted-foreground" />
-                    {i18n._('homepage.reddit')}
-                </Button>
-                <Button
-                    variant="link"
-                    class="h-6 px-0 has-[>svg]:px-0 text-muted-foreground"
-                    href="https://facebook.com/gpx.studio"
-                    target="_blank"
-                >
-                    <Logo company="facebook" class="h-4 fill-muted-foreground" />
-                    {i18n._('homepage.facebook')}
-                </Button>
-                <Button
-                    variant="link"
-                    class="h-6 px-0 has-[>svg]:px-0 text-muted-foreground"
-                    href="mailto:hello@gpx.studio"
-                    target="_blank"
-                >
-                    <AtSign size="16" />
-                    {i18n._('homepage.email')}
-                </Button>
-            </div>
-            <div class="flex flex-col items-start gap-1">
                 <span class="font-semibold">{i18n._('homepage.contribute')}</span>
                 <Button
                     variant="link"

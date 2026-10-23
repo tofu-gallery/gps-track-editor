@@ -10,7 +10,8 @@ function localizeManifest(manifestTemplateData: any, language: string) {
     manifestTemplateData.lang = language;
     manifestTemplateData.start_url = `/${language}/app`;
     manifestTemplateData.scope = `/${language}/app`;
-    manifestTemplateData.id = `https://gpx.studio/${language}/app`;
+    // Tofu: a relative id, because a copy does not know its own address at build time.
+    manifestTemplateData.id = `/${language}/app`;
 
     fs.writeFileSync(localizedManifestFile, JSON.stringify(manifestTemplateData, null, 2));
 }
