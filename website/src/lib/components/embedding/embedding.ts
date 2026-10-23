@@ -1,4 +1,4 @@
-import { PUBLIC_MAPTILER_KEY } from '$env/static/public';
+import { PUBLIC_GOOGLE_DRIVE_KEY, PUBLIC_MAPTILER_KEY } from '$env/static/public';
 import { basemaps } from '$lib/assets/layers';
 
 export type EmbeddingOptions = {
@@ -101,11 +101,22 @@ export const allowedEmbeddingBasemaps = Object.keys(basemaps).filter(
 );
 
 export function getFilesFromEmbeddingOptions(options: EmbeddingOptions): string[] {
-    return options.files.concat(options.ids.map((id) => getURLForGoogleDriveFile(id)));
+    return options.files.concat(getURLsForGoogleDriveFiles(options.ids));
 }
 
-export function getURLForGoogleDriveFile(fileId: string): string {
-    return `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=AIzaSyA2ZadQob_hXiT2VaYIkAyafPvz_4ZMssk`;
+// Tofu: the original site's Google API key is removed. Google Drive files (`ids`) open only with a
+// browser key of this copy's own, set as PUBLIC_GOOGLE_DRIVE_KEY; without one they are skipped.
+export function getURLsForGoogleDriveFiles(fileIds: string[]): string[] {
+    if (!PUBLIC_GOOGLE_DRIVE_KEY) {
+        if (fileIds.length > 0) {
+            console.warn('Google Drive files are not opened: PUBLIC_GOOGLE_DRIVE_KEY is not set.');
+        }
+        return [];
+    }
+    return fileIds.map(
+        (fileId) =>
+            `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${PUBLIC_GOOGLE_DRIVE_KEY}`
+    );
 }
 
 export function convertOldEmbeddingOptions(options: URLSearchParams): any {

@@ -5,6 +5,9 @@ import { mdsvex } from 'mdsvex';
 // Tofu: every default map style in this copy is keyless, so a build without a MapTiler key
 // reads it as an empty string instead of failing the `$env/static/public` import.
 process.env.PUBLIC_MAPTILER_KEY ??= '';
+// Tofu: the original site's Google API key is removed; Google Drive files open only when this
+// copy's owner sets a browser key of their own. Unset, it builds as an empty string.
+process.env.PUBLIC_GOOGLE_DRIVE_KEY ??= '';
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {

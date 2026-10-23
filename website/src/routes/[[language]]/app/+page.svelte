@@ -17,7 +17,8 @@
     import { onDestroy, onMount } from 'svelte';
     import { page } from '$app/state';
     import { gpxStatistics, hoveredPoint, slicedGPXStatistics } from '$lib/logic/statistics';
-    import { getURLForGoogleDriveFile } from '$lib/components/embedding/embedding';
+    // Tofu: Google Drive files open only with this copy's own key (see embedding.ts).
+    import { getURLsForGoogleDriveFiles } from '$lib/components/embedding/embedding';
     import { db } from '$lib/db';
     import { fileStateCollection } from '$lib/logic/file-state';
 
@@ -40,7 +41,7 @@
         fileStateCollection.connectToDatabase(db).then(() => {
             let files: string[] = JSON.parse(page.url.searchParams.get('files') || '[]');
             let ids: string[] = JSON.parse(page.url.searchParams.get('ids') || '[]');
-            let urls: string[] = files.concat(ids.map(getURLForGoogleDriveFile));
+            let urls: string[] = files.concat(getURLsForGoogleDriveFiles(ids));
 
             if (urls.length > 0) {
                 let downloads: Promise<File | null>[] = [];

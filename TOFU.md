@@ -18,7 +18,8 @@ Build at the repository root
 - `vercel.json` (new): `outputDirectory: website/build`, where `@sveltejs/adapter-static` writes the site; the SvelteKit preset would otherwise look for `public/`.
 
 Runs without a secret, at a bare address
-- `website/svelte.config.js`: base path fixed to empty (was `BASE_PATH`), and `PUBLIC_MAPTILER_KEY` defaults to an empty string so the `$env/static/public` imports build without a key. No default style needs MapTiler any more.
+- `website/svelte.config.js`: base path fixed to empty (was `BASE_PATH`), and `PUBLIC_MAPTILER_KEY` and `PUBLIC_GOOGLE_DRIVE_KEY` default to an empty string so the `$env/static/public` imports build without a key. No default style needs MapTiler any more.
+- `website/src/lib/components/embedding/embedding.ts` and `website/src/routes/[[language]]/app/+page.svelte`: the original site's Google API key is removed. A copy should not use the original project's key, and Tofu's safety check blocks a deployment that carries a committed Google API key. The app used it to download Google Drive files named in `ids=` links, in the app and in embedded maps. Those files now download only when the copy's owner sets `PUBLIC_GOOGLE_DRIVE_KEY` to a Google API key of their own (Google Drive API enabled, restricted to the copy's address; like the original key, it is visible in the page). Without it, an `ids=` link opens the app or the embedded map without those files and logs one console warning; files opened by address (`files=`) and everything else work as before.
 
 Maps, terrain, routing and points of interest
 - `website/src/lib/assets/layers.ts`: the four styles served from `styles.gpx.studio` (the original site's tiles, fonts and sprites, plus a MapTiler key for satellite) are replaced. `libertyTopo` (the default) is OpenFreeMap Liberty and `osm` is OpenFreeMap Bright. `libertySatellite` now opens Esri World Imagery and `osmTopo` opens OpenTopoMap; both are hidden from the layer menus (they stay as names so old embed links still open a map), and Esri imagery is shown in the menu by default instead. The 3D terrain source uses Mapterhorn's public endpoint instead of the original site's mirror (`tiles.gpx.studio`). The menu label "Liberty Topo" now shows Liberty without contour lines; the Mapterhorn hillshade overlay is still available.
@@ -72,7 +73,14 @@ All of these are called from the visitor's browser without a key. None is run by
 - No street view button or menu item appears.
 - Favicon, light and dark logos, and the installed app's name read "GPS track editor".
 - The embed page's code shows the copy's own address.
-- Opening Google Drive files (`ids=` links) uses a browser API key that the original project put in `website/src/lib/components/embedding/embedding.ts`; it may be limited to gpx.studio and fail on a copy.
+- With a `PUBLIC_GOOGLE_DRIVE_KEY` of the owner's own, a public Google Drive file named in an `ids=` link opens in the app and in an embedded map.
+
+## Verification
+
+2026-10-23, after removing the Google API key:
+- Tofu's safety check, run on this version imported the way Tofu's GitHub import does, reports no finding (`safety ok`).
+- A copy shaped like Tofu's import (no `node_modules`, `dist` or `build`) builds with the root `npm run build` on Node 22 with no settings set, and the built site contains no Google API key.
+- Served locally with `vite preview`, `/app` opened a test track given in `files=` (map, track, name, distance, climb and elevation profile) while an `ids=` Drive id in the same link was skipped with the one console warning; no console errors, no failed requests, and no request to `www.googleapis.com` or any `gpx.studio` host (only the site itself, `tiles.openfreemap.org` and `tiles.mapterhorn.com`). `/embed` with the same kind of links did the same.
 
 ## Licence
 
