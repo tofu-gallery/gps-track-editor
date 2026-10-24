@@ -16,6 +16,7 @@ Build at the repository root
 - `package.json` (new): a root build that runs the original deploy workflow's steps in order: `npm ci` in `gpx/` (its postinstall compiles the library), `npm ci` in `website/`, then the website's own `npm run build`. It declares `@sveltejs/kit` as an optional peer dependency only so Tofu's detector picks the SvelteKit preset at the root; nothing is installed at the root. `engines.node` is `>=22` because some locked dependencies require Node 22 and `website/.npmrc` sets `engine-strict`.
 - `package-lock.json` (new): the matching root lockfile (no packages), so the root installs from a lockfile.
 - `vercel.json` (new): `outputDirectory: website/build`, where `@sveltejs/adapter-static` writes the site; the SvelteKit preset would otherwise look for `public/`.
+- `vercel.json`: `cleanUrls: true` (2026-10-24). `@sveltejs/adapter-static` writes each page as a file (`app.html`, `help.html`, `fr/app.html`); without it the host answered `/app` with 404 and only `/app.html` opened, which a live copy showed. With it, each page answers at the address the site links to (`/app`, `/help`, `/fr/app`), and `/app.html` redirects there.
 
 Runs without a secret, at a bare address
 - `website/svelte.config.js`: base path fixed to empty (was `BASE_PATH`), and `PUBLIC_MAPTILER_KEY` and `PUBLIC_GOOGLE_DRIVE_KEY` default to an empty string so the `$env/static/public` imports build without a key. No default style needs MapTiler any more.
